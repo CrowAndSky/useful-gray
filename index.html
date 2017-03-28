@@ -16,17 +16,13 @@ ul, li {
   list-style: none;
 }
 #wrapper,
-.image-svg,
 .desaturater {
-  height: calc( 50% - 2px);
+  height: 100vh;
   max-width: 1000px;
-  max-height: 500px;
   width: 100%;
 }
 #wrapper {
-  height: 100vw;
-  max-height: 1000px;
-  overflow: hidden;
+  margin: 0 auto;
   position: relative;
 }
 .desaturater {
@@ -55,8 +51,11 @@ ul, li {
 }
 .desaturater-3 {
   left: 30%;
-  transition-delay: 8s;
+  transition-delay: 0s;
   width: 14.6%;
+}
+.animating-in .desaturater-3 {
+  transition-delay: 4.3s;
 }
 .desaturater-4 {
   left: 44.6%;
@@ -88,16 +87,12 @@ ul, li {
   z-index: 100;
 }
 .desaturated .dyc-logo {
-  top: calc( 70% );
+  top: calc( 100% - 18vw );
 }
 body {
   background-image: url('s-w.png');
   background-position: 50% 0;
-  /*margin: 0 auto;
-  max-width: 100%;*/
 }
-
-
 /* support backdrop-filter */
 @supports ( (-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px)) ) {
   .desaturater {
@@ -128,7 +123,6 @@ $( window ).ready( function(){
 
 var isPageGrayscale = false,
     currentGrayscale,
-    //currentContrast = 1,
     requestAnimationLoopIndex,
     requestAnimationID,
     animationLoopLength = 100,
@@ -140,12 +134,6 @@ var isPageGrayscale = false,
         cancelAnimationFrame( requestAnimationID );
       } else {
         currentGrayscale = currentGrayscale + animationLoopIncrement;
-        // if ( requestAnimationLoopIndex < animationLoopLength / 2 ) {
-        //   currentContrast = currentContrast + animationLoopContrastIncrement;
-        // } else {
-        //   currentContrast = currentContrast - animationLoopContrastIncrement;
-        // }
-        // desaturateTargets.css( "filter", "grayscale(" + currentGrayscale + ") contrast(" + currentContrast + ")" );
         desaturateTargets.css( "filter", "grayscale(" + currentGrayscale + "%)" );
         requestAnimationLoopIndex++;
         requestAnimationID = requestAnimationFrame( desaturateEntirePage );
@@ -154,26 +142,26 @@ var isPageGrayscale = false,
 
 $( 'body' ).click(function(){
   requestAnimationLoopIndex = 1;
-  //$( 'body' ).toggleClass( 'desaturated');
   if ( isPageGrayscale ) {
-    currentGrayscale = 100;
+    currentGrayscale = 0;
+    desaturateTargets.css( "filter", "grayscale(0%)" );
     isPageGrayscale = false;
     $( 'body' ).removeClass( 'desaturated');
-    animationLoopIncrement = math.Round( -1 / animationLoopLength );
-
-    window.setTimeout( function(){
-      requestAnimationID = requestAnimationFrame( desaturateEntirePage );
-    }, 1000);
-  } else {
-    isPageGrayscale = true;
-    currentGrayscale = 0;
-    $( 'body' ).addClass( 'desaturated');
-    animationLoopIncrement = math.Round( 1 / animationLoopLength );
+    animationLoopIncrement = Math.round( 100 / animationLoopLength );
     requestAnimationID = requestAnimationFrame( desaturateEntirePage );
+  } else {
+    requestAnimationLoopIndex = 1;
+    isPageGrayscale = true;
+    currentGrayscale = 100;
+    desaturateTargets.css( "filter", "grayscale(100%)" );
+    $( 'body' ).addClass( 'desaturated animating-in');
+    animationLoopIncrement = -100 / animationLoopLength;
+    window.setTimeout( function(){
+      $( 'body' ).removeClass( 'animating-in');
+      requestAnimationID = requestAnimationFrame( desaturateEntirePage );
+    }, 4500);
   }
-
 });
-
 
 }); // END $( window ).ready
 
