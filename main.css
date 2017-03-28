@@ -1,0 +1,35 @@
+/* ------------------ ############ RESETS ############ ------------------ */
+
+html, body, div, span, section, ul, li, h1, h2, h3, h4, h5 {
+  box-sizing: border-box;
+  color: #222;
+  font-family: "Kozuka Gothic Pro";
+  font-family: 'Abril Fatface', cursive;
+  font-weight: lighter;
+  margin: 0;
+  padding: 0;
+}
+
+ul, li {
+  list-style: none;
+}
+
+.svg-defs {
+  left: 0;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  z-index: -1;
+}
+
+
+/* ------------------ ############ GENERAL ############ ------------------ */
+#wrapper {
+  height: 100vh;
+  left: 0;
+  max-width: 1000px;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  width: 100vw;
+}
