@@ -140,7 +140,7 @@ var isPageGrayscale = false,
       }
     };
 
-$( 'body' ).click(function(){
+$( 'body' ).on( "click touchmove", function() {
   requestAnimationLoopIndex = 1;
   if ( isPageGrayscale ) {
     currentGrayscale = 0;
